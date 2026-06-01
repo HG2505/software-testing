@@ -1,0 +1,42 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="auth-panel">
+      <p class="hero-eyebrow">Create Account</p>
+      <h1 class="hero-title">Register for SwagStore</h1>
+      <p class="hero-sub">Join the store to save your orders and checkout securely.</p>
+      <p class="auth-note">Create a new account with your email address and password to access checkout and order history.</p>
+    </div>
+
+    <div class="auth-panel auth-form-card">
+      {{#if error}}
+      <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      {{#if successMessage}}
+      <div class="alert alert-success">{{successMessage}}</div>
+      {{/if}}
+
+      <form method="POST" action="/register" class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input class="form-input" type="text" name="name" value="{{form.name}}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" name="email" value="{{form.email}}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Shipping Address</label>
+          <textarea class="form-input form-textarea" name="address" required>{{form.address}}</textarea>
+        </div>
+        <button type="submit" class="btn-primary btn-full">Register</button>
+      </form>
+
+      <p class="form-footer">Already have an account? <a href="/login">Login here</a>.</p>
+    </div>
+  </div>
+</section>

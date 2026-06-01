@@ -1,0 +1,72 @@
+<div class="page-container">
+  <div class="page-header">
+    <a href="/" class="back-link">← Continue Shopping</a>
+    <h1 class="page-title">Your Cart</h1>
+    {{#if cartCount}}<span class="page-count">{{cartCount}} item{{#if (gt cartCount 1)}}s{{/if}}</span>{{/if}}
+  </div>
+
+  {{#if empty}}
+  <div class="empty-state">
+    <div class="empty-icon">🛒</div>
+    <h2 class="empty-title">Your cart is empty</h2>
+    <p class="empty-sub">Looks like you haven't added anything yet.</p>
+    <a href="/" class="btn-primary">Start Shopping</a>
+  </div>
+  {{else}}
+  <div class="cart-layout">
+    <div class="cart-items">
+      {{#each lines}}
+      <div class="cart-row">
+        <img src="{{product.image}}" alt="{{product.name}}" class="cart-img">
+        <div class="cart-info">
+          <p class="cart-cat">{{product.category}}</p>
+          <h3 class="cart-name">{{product.name}}</h3>
+          <span class="cart-unit">${{product.price}} each</span>
+        </div>
+        <div class="cart-actions">
+          <form method="POST" action="/cart/update" class="qty-form" id="form-{{product.id}}">
+            <input type="hidden" name="productId" value="{{product.id}}">
+            <button type="button" class="qty-btn" onclick="changeQty('{{product.id}}', -1)">−</button>
+            <input id="qty-{{product.id}}" class="qty-input" type="number"
+              name="qty" value="{{qty}}" min="1" max="99"
+              onchange="submitQtyForm('{{product.id}}')">
+            <button type="button" class="qty-btn" onclick="changeQty('{{product.id}}', 1)">+</button>
+          </form>
+          <span class="cart-sub">${{subtotal}}</span>
+          <form method="POST" action="/cart/remove" style="display:inline">
+            <input type="hidden" name="productId" value="{{product.id}}">
+            <button type="submit" class="remove-btn" title="Remove">✕</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+
+      <div class="cart-clear-row">
+        <form method="POST" action="/cart/clear">
+          <button type="submit" class="btn-ghost">Clear cart</button>
+        </form>
+      </div>
+    </div>
+
+    <aside class="cart-summary">
+      <h2 class="summary-title">Order Summary</h2>
+      <div class="summary-row"><span>Subtotal</span><span>${{subtotal}}</span></div>
+      <div class="summary-row"><span>Tax (8%)</span><span>${{tax}}</span></div>
+      <div class="summary-row summary-total"><span>Total</span><span>${{total}}</span></div>
+      <a href="/checkout" class="btn-primary btn-full">Proceed to Checkout →</a>
+    </aside>
+  </div>
+  {{/if}}
+</div>
+
+<script>
+function changeQty(productId, delta) {
+  const input = document.getElementById('qty-' + productId);
+  const newVal = Math.max(1, parseInt(input.value || 1) + delta);
+  input.value = newVal;
+  submitQtyForm(productId);
+}
+function submitQtyForm(productId) {
+  document.getElementById('form-' + productId).submit();
+}
+</script>

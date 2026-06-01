@@ -1,0 +1,188 @@
+# ─────────────────────────────────────────────────────────────
+# SwagStore – CI/CD Pipeline
+# Triggers: push / PR to any branch
+#           additional "deploy" job runs only on main
+# ─────────────────────────────────────────────────────────────
+name: CI / CD
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+# Cancel in-progress runs when a new commit is pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── 1. LINT ────────────────────────────────────────────────
+  lint:
+    name: Lint (Node syntax check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check JS syntax (node --check)
+        run: |
+          find . -name "*.js" \
+            ! -path "./node_modules/*" \
+            ! -path "./.github/*" \
+            -exec node --check {} \;
+
+  # ── 2. UNIT + INTEGRATION TESTS ───────────────────────────
+  test:
+    name: Test (Node ${{ matrix.node }})
+    needs: lint
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: ['18', '20', '22']   # test on LTS + current
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: matrix.node == '20'        # upload only once
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+
+  # ── 3. BUILD VERIFICATION ─────────────────────────────────
+  build:
+    name: Build verification
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install production deps only
+        run: npm ci --omit=dev
+
+      - name: Verify app starts and exits cleanly
+        run: |
+          timeout 5 node -e "
+            const createApp = require('./app');
+            const app = createApp();
+            const server = app.listen(0, () => {
+              console.log('✅ App started on port', server.address().port);
+              server.close(() => process.exit(0));
+            });
+          " || true
+
+      - name: Create release archive
+        run: |
+          mkdir -p dist
+          zip -r dist/swagstore.zip . \
+            --exclude "node_modules/*" \
+            --exclude ".git/*" \
+            --exclude "coverage/*" \
+            --exclude "dist/*" \
+            --exclude "*.bak"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swagstore-build-${{ github.sha }}
+          path: dist/swagstore.zip
+          retention-days: 14
+
+  # ── 4. DEPLOY (main branch only) ──────────────────────────
+  deploy:
+    name: Deploy to production
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    environment:
+      name: production
+      url: https://swagstore.example.com   # ← thay bằng URL thật
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install production deps
+        run: npm ci --omit=dev
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: swagstore-build-${{ github.sha }}
+          path: dist/
+
+      # ── Option A: Deploy to Railway / Render / Fly.io ─────
+      # Bỏ comment block phù hợp với nền tảng của bạn.
+
+      # Railway
+      # - name: Deploy to Railway
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      #   run: npx @railway/cli up --service swagstore
+
+      # Render (via deploy hook)
+      # - name: Trigger Render deploy
+      #   run: |
+      #     curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+
+      # Fly.io
+      # - name: Deploy to Fly.io
+      #   uses: superfly/flyctl-actions/setup-flyctl@master
+      # - run: flyctl deploy --remote-only
+      #   env:
+      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      # ── Option B: SSH deploy to VPS ───────────────────────
+      # - name: Deploy via SSH
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host:     ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key:      ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /var/www/swagstore
+      #       git pull origin main
+      #       npm ci --omit=dev
+      #       pm2 restart swagstore
+
+      - name: ✅ Deploy step placeholder
+        run: |
+          echo "Artifact ready at dist/swagstore.zip"
+          echo "Uncomment the deploy option that matches your host."
+          echo "Commit SHA: ${{ github.sha }}"

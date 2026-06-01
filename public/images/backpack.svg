@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+  <!-- background -->
+  <rect width="400" height="500" fill="#1a1a2e"/>
+  <!-- subtle grid pattern -->
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+    <path d="M32 0L0 0 0 32" fill="none" stroke="#c8a96e" stroke-width="0.3" opacity="0.15"/>
+  </pattern>
+  <rect width="400" height="500" fill="url(#grid)"/>
+  <!-- glow circle behind product -->
+  <radialGradient id="glow" cx="50%" cy="50%" r="40%">
+    <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/>
+  </radialGradient>
+  <ellipse cx="200" cy="210" rx="160" ry="160" fill="url(#glow)"/>
+  <!-- product illustration -->
+  
+      <rect x="130" y="140" width="140" height="170" rx="22" fill="#c8a96e" opacity="0.9"/>
+      <rect x="155" y="110" width="90" height="45" rx="18" fill="none" stroke="#c8a96e" stroke-width="8"/>
+      <rect x="148" y="190" width="104" height="8" rx="4" fill="#1a1a2e" opacity="0.4"/>
+      <rect x="148" y="210" width="104" height="8" rx="4" fill="#1a1a2e" opacity="0.4"/>
+      <circle cx="200" cy="225" r="12" fill="#1a1a2e" opacity="0.35"/>
+    
+  <!-- brand strip at bottom -->
+  <rect x="0" y="430" width="400" height="70" fill="#c8a96e" opacity="0.1"/>
+  <line x1="0" y1="430" x2="400" y2="430" stroke="#c8a96e" stroke-width="1" opacity="0.3"/>
+  <text x="200" y="458" text-anchor="middle" font-family="Georgia,serif"
+        font-size="15" fill="#c8a96e" font-weight="bold" opacity="0.95">Sauce Labs Backpack</text>
+  <text x="200" y="480" text-anchor="middle" font-family="sans-serif"
+        font-size="11" fill="#c8a96e" opacity="0.5" letter-spacing="3">SAUCE LABS</text>
+</svg>

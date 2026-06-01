@@ -1,0 +1,64 @@
+<div class="page-container">
+  <div class="page-header">
+    <a href="/cart" class="back-link">← Back to Cart</a>
+    <h1 class="page-title">Checkout</h1>
+  </div>
+
+  <div class="checkout-layout">
+    <form method="POST" action="/checkout" class="checkout-form">
+      <section class="form-section">
+        <h2 class="form-section-title">Contact</h2>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="name" class="form-input" placeholder="Nguyen Van A" value="{{name}}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-input" placeholder="you@example.com" value="{{email}}" required>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2 class="form-section-title">Shipping</h2>
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <textarea name="address" class="form-input form-textarea" placeholder="123 Test Street, District 1, HCMC" required>{{address}}</textarea>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2 class="form-section-title">Payment <span class="demo-badge">Demo only</span></h2>
+        <div class="form-group">
+          <label class="form-label">Card number</label>
+          <input type="text" class="form-input" placeholder="4242 4242 4242 4242" maxlength="19">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry</label>
+            <input type="text" class="form-input" placeholder="MM / YY">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVC</label>
+            <input type="text" class="form-input" placeholder="123">
+          </div>
+        </div>
+      </section>
+
+      <button type="submit" class="btn-primary btn-full btn-large">Place Order →</button>
+    </form>
+
+    <aside class="checkout-summary">
+      <h2 class="summary-title">Your Order</h2>
+      {{#each lines}}
+      <div class="order-line">
+        <span class="order-line-name">{{product.name}} <span class="order-line-qty">×{{qty}}</span></span>
+        <span class="order-line-price">${{subtotal}}</span>
+      </div>
+      {{/each}}
+      <div class="summary-divider"></div>
+      <div class="summary-row"><span>Subtotal</span><span>${{subtotal}}</span></div>
+      <div class="summary-row"><span>Tax (8%)</span><span>${{tax}}</span></div>
+      <div class="summary-row summary-total"><span>Total</span><span>${{total}}</span></div>
+    </aside>
+  </div>
+</div>

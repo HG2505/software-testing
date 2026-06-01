@@ -1,0 +1,53 @@
+<div class="shop-hero">
+  <p class="hero-eyebrow">Premium QA Merch</p>
+  <h1 class="hero-title">Test in Style</h1>
+  <p class="hero-sub">Gear that says you care about quality — inside and out.</p>
+</div>
+
+<div class="shop-controls">
+  <div class="filter-pills">
+    <a href="/?type={{activeType}}&sort={{activeSort}}" class="pill {{#if (eq activeCategory 'all')}}pill-active{{/if}}">All</a>
+    {{#each categories}}
+    <a href="/?category={{this}}&type={{../activeType}}&sort={{../activeSort}}" class="pill {{#if (eq this ../activeCategory)}}pill-active{{/if}}">{{this}}</a>
+    {{/each}}
+  </div>
+  <div class="filter-pills">
+    <a href="/?category={{activeCategory}}&sort={{activeSort}}" class="pill {{#if (eq activeType 'all')}}pill-active{{/if}}">All Types</a>
+    {{#each types}}
+    <a href="/?category={{../activeCategory}}&type={{this}}&sort={{../activeSort}}" class="pill {{#if (eq this ../activeType)}}pill-active{{/if}}">{{this}}</a>
+    {{/each}}
+  </div>
+  <div class="sort-wrap">
+    <label class="sort-label">Sort</label>
+    <select class="sort-select" onchange="location='/?category={{activeCategory}}&type={{activeType}}&sort='+this.value">
+      <option value="default"    {{#if (eq activeSort 'default')   }}selected{{/if}}>Featured</option>
+      <option value="name"       {{#if (eq activeSort 'name')      }}selected{{/if}}>A → Z</option>
+      <option value="price-asc"  {{#if (eq activeSort 'price-asc') }}selected{{/if}}>Price ↑</option>
+      <option value="price-desc" {{#if (eq activeSort 'price-desc')}}selected{{/if}}>Price ↓</option>
+    </select>
+  </div>
+</div>
+
+<div class="product-grid">
+  {{#each products}}
+  <article class="product-card">
+    {{#if badge}}
+    <span class="badge {{badgeClass badge}}">{{badge}}</span>
+    {{/if}}
+    <div class="card-img-wrap">
+      <img src="{{image}}" alt="{{name}}" class="card-img" loading="lazy">
+    </div>
+    <div class="card-body">
+      <p class="card-category">{{category}} · {{type}}</p>
+      <h2 class="card-name">{{name}}</h2>
+      <p class="card-desc">{{desc}}</p>
+      <div class="card-footer">
+        <span class="card-price">${{price}}</span>
+        <form method="POST" action="/cart/add">
+          <input type="hidden" name="productId" value="{{id}}">
+          <button type="submit" class="btn-add">Add to cart</button>
+        </form>
+      </div>
+  </article>
+  {{/each}}
+</div>

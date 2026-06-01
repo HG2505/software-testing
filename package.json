@@ -1,0 +1,34 @@
+{
+  "name": "swagstore",
+  "version": "1.0.0",
+  "description": "SwagStore – Node.js MVC ecommerce with JSON storage, auth, order history",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest --runInBand --forceExit",
+    "test:watch": "jest --watch --runInBand",
+    "test:coverage": "jest --coverage --runInBand --forceExit"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": ["**/tests/**/*.test.js"],
+    "collectCoverageFrom": [
+      "models/**/*.js",
+      "controllers/**/*.js",
+      "routes/**/*.js"
+    ],
+    "coverageReporters": ["text", "lcov"]
+  },
+  "keywords": ["express", "handlebars", "mvc", "jest", "ecommerce"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^5.2.1",
+    "express-handlebars": "^9.0.1",
+    "supertest": "^7.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

@@ -1,0 +1,40 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <a href="/" class="back-link">← Back to Shop</a>
+      <h1 class="page-title">My Profile</h1>
+      <p class="page-subtitle">Account information and preferences.</p>
+    </div>
+  </div>
+
+  <div class="auth-card" style="margin-top:2rem">
+    <div class="auth-panel">
+      <div class="profile-avatar">{{user.name}}</div>
+      <p class="hero-eyebrow">Logged in as</p>
+      <h2 class="hero-title" style="font-size:1.8rem">{{user.name}}</h2>
+      <p class="hero-sub">{{user.email}}</p>
+    </div>
+    <div class="auth-panel auth-form-card">
+      <div class="profile-field">
+        <span class="form-label">Full Name</span>
+        <span class="profile-value">{{user.name}}</span>
+      </div>
+      <div class="profile-field">
+        <span class="form-label">Email</span>
+        <span class="profile-value">{{user.email}}</span>
+      </div>
+      <div class="profile-field">
+        <span class="form-label">Shipping Address</span>
+        <span class="profile-value">{{user.address}}</span>
+      </div>
+      <div class="profile-field">
+        <span class="form-label">Role</span>
+        <span class="profile-value profile-role">{{user.role}}</span>
+      </div>
+      <div class="profile-actions">
+        <a href="/orders" class="btn-primary">View Order History</a>
+        <a href="/logout" class="btn-ghost">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>

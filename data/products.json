@@ -1,0 +1,8 @@
+[
+  { "id": 1, "name": "Sauce Labs Backpack",        "price": 29.99, "image": "/images/backpack.svg",      "category": "Accessories", "type": "Backpack",    "badge": "Bestseller", "desc": "Carry your test scripts in style. Durable canvas, laptop sleeve, padded straps." },
+  { "id": 2, "name": "Sauce Labs Bike Light",       "price": 9.99,  "image": "/images/bike-light.svg",    "category": "Outdoor",     "type": "Bike Light",  "badge": null,         "desc": "A red light and white light that is guaranteed to be seen in the dark." },
+  { "id": 3, "name": "Sauce Labs Bolt T-Shirt",     "price": 15.99, "image": "/images/bolt-shirt.svg",    "category": "Apparel",     "type": "T-Shirt",     "badge": "New",        "desc": "Get your testing power on. Super-soft 100% polyester, wrinkle-free." },
+  { "id": 4, "name": "Sauce Labs Fleece Jacket",    "price": 49.99, "image": "/images/fleece-jacket.svg", "category": "Apparel",     "type": "Fleece Jacket","badge": null,         "desc": "Mid-layer warmth. 100% polyester micro-fleece jacket – perfect for outdoor testing." },
+  { "id": 5, "name": "Sauce Labs Onesie",           "price": 7.99,  "image": "/images/onesie.svg",        "category": "Apparel",     "type": "Onesie",      "badge": "Sale",       "desc": "Snuggle in software. 95% cotton, 5% spandex, machine washable." },
+  { "id": 6, "name": "Test.allTheThings() T-Shirt", "price": 15.99, "image": "/images/red-tshirt.svg",    "category": "Apparel",     "type": "T-Shirt",     "badge": "Limited",    "desc": "This classic unisex jersey tee fits like a well-loved favorite." }
+]

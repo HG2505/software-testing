@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1779694939648,
+    "name": "haha",
+    "email": "haha@gmail.com",
+    "address": "123haha",
+    "passwordHash": "$2a$10$HYOkTD.9qqAdk3Xqw9R1Gu714r8WDLRvAFbnIvXymddRJyqiXYamy",
+    "role": "customer",
+    "createdAt": "2026-05-25T07:42:19.727Z"
+  }
+]

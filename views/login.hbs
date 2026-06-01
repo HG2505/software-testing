@@ -1,0 +1,34 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="auth-panel">
+      <p class="hero-eyebrow">Welcome Back</p>
+      <h1 class="hero-title">Login to SwagStore</h1>
+      <p class="hero-sub">Sign in to continue to checkout and manage your orders.</p>
+      <p class="auth-note">Use your registered email and password to access your account.</p>
+    </div>
+
+    <div class="auth-panel auth-form-card">
+      {{#if successMessage}}
+      <div class="alert alert-success">{{successMessage}}</div>
+      {{/if}}
+
+      {{#if error}}
+      <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+
+      <form method="POST" action="/login" class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" name="email" value="{{form.email}}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-primary btn-full">Login</button>
+      </form>
+
+      <p class="form-footer">New here? <a href="/register">Create an account</a>.</p>
+    </div>
+  </div>
+</section>

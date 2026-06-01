@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+  <!-- background -->
+  <rect width="400" height="500" fill="#1c1c1c"/>
+  <!-- subtle grid pattern -->
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+    <path d="M32 0L0 0 0 32" fill="none" stroke="#f5a623" stroke-width="0.3" opacity="0.15"/>
+  </pattern>
+  <rect width="400" height="500" fill="url(#grid)"/>
+  <!-- glow circle behind product -->
+  <radialGradient id="glow" cx="50%" cy="50%" r="40%">
+    <stop offset="0%" stop-color="#f5a623" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#f5a623" stop-opacity="0"/>
+  </radialGradient>
+  <ellipse cx="200" cy="210" rx="160" ry="160" fill="url(#glow)"/>
+  <!-- product illustration -->
+  
+      <path d="M110,130 L155,110 L175,145 L200,120 L225,145 L245,110 L290,130 L275,175 L240,165 L240,295 L160,295 L160,165 L125,175 Z"
+            fill="#e8e8e8"/>
+      <!-- bolt -->
+      <polygon points="205,155 188,215 202,215 195,265 215,195 200,195 210,155"
+               fill="#f5a623"/>
+    
+  <!-- brand strip at bottom -->
+  <rect x="0" y="430" width="400" height="70" fill="#f5a623" opacity="0.1"/>
+  <line x1="0" y1="430" x2="400" y2="430" stroke="#f5a623" stroke-width="1" opacity="0.3"/>
+  <text x="200" y="458" text-anchor="middle" font-family="Georgia,serif"
+        font-size="15" fill="#f5a623" font-weight="bold" opacity="0.95">Bolt T-Shirt</text>
+  <text x="200" y="480" text-anchor="middle" font-family="sans-serif"
+        font-size="11" fill="#f5a623" opacity="0.5" letter-spacing="3">SAUCE LABS</text>
+</svg>

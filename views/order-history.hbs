@@ -1,0 +1,71 @@
+<div class="page-container">
+  <div class="page-header order-header">
+    <div>
+      <a href="/" class="back-link">← Back to Shop</a>
+      <h1 class="page-title">Order History</h1>
+      <p class="page-subtitle">Browse your completed purchases and review shipping details for each order.</p>
+    </div>
+    <div class="page-metrics">
+      <span class="pill pill-active">{{orders.length}} orders</span>
+      <span class="pill">Recent purchases</span>
+    </div>
+  </div>
+
+  {{#if orders.length}}
+  <div class="order-list">
+    {{#each orders}}
+    <article class="order-card">
+      <div class="order-card-header">
+        <div>
+          <p class="order-tag">Order #{{id}}</p>
+          <p class="order-date">Placed {{placedAt}}</p>
+        </div>
+        <div class="order-status-pill">Delivered</div>
+      </div>
+
+      <div class="order-card-body">
+        <div class="order-card-summary">
+          <div class="summary-row">
+            <p class="summary-label">Shipping to</p>
+            <p class="summary-text">{{name}}</p>
+            <p class="summary-detail">{{address}}</p>
+          </div>
+          <div class="summary-row">
+            <p class="summary-label">Email</p>
+            <p class="summary-text">{{email}}</p>
+          </div>
+          <div class="summary-row">
+            <p class="summary-label">Items</p>
+            <p class="summary-text">{{items.length}} items</p>
+          </div>
+        </div>
+
+        <div class="order-card-items">
+          <h2 class="items-title">Order details</h2>
+          {{#each items}}
+          <div class="order-item-row">
+            <div class="item-meta">
+              <p class="item-name">{{product.name}}</p>
+              <p class="item-subtext">Quantity ×{{qty}}</p>
+            </div>
+            <p class="item-price">${{subtotal}}</p>
+          </div>
+          {{/each}}
+          <div class="order-card-footer">
+            <span class="order-total-label">Order total</span>
+            <span class="order-total-value">${{total}}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+    {{/each}}
+  </div>
+  {{else}}
+  <div class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h1 class="empty-title">No orders yet</h1>
+    <p class="empty-sub">Your past purchases will appear here once you complete checkout.</p>
+    <a href="/" class="btn-primary">Continue Shopping</a>
+  </div>
+  {{/if}}
+</div>

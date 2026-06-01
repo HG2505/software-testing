@@ -1,0 +1,24 @@
+<nav class="navbar">
+  <a href="/" class="nav-brand">
+    <span class="brand-icon">⬡</span>
+    <span>SwagStore</span>
+  </a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Shop</a>
+    {{#if user}}
+      <a href="/orders" class="nav-link">Orders</a>
+      <span class="nav-link">Hi, {{user.name}}</span>
+      <a href="/logout" class="nav-link">Logout</a>
+    {{else}}
+      <a href="/login" class="nav-link">Login</a>
+      <a href="/register" class="nav-link">Register</a>
+    {{/if}}
+    <a href="/cart" class="nav-link cart-link">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      {{#if cartCount}}<span class="cart-badge">{{cartCount}}</span>{{/if}}
+    </a>
+  </div>
+</nav>
